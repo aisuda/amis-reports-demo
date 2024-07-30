@@ -1,3 +1,5 @@
+### Demo示例
+[点击在线预览](https://aisuda.github.io/amis-reports-demo/test/index.html)
 ### 本地调试
 #### 1、安装依赖  
 ```

@@ -98,9 +98,9 @@ module.exports = {
   },
   build: {
     entry: { // 构建Demo入口
-      preview: [
+      index: [
         './demo/Editor.jsx'
-      ],
+      ]
     },
     // 用于构建生产环境代码的相关配置信息
     NODE_ENV: 'development', // development production
