@@ -1,0 +1,25 @@
+.DS_Store/
+node_modules/
+npm/
+dist/
+lib/
+esm/
+jar/
+test/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.hg
+.svn
+.CVS
+.idea
+.vscode
+.DS_Store
+.eslintcache
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

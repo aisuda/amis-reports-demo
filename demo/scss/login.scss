@@ -1,0 +1,121 @@
+$ns: 'cxd-' !default;
+.Login-container {
+  background: #ffffff;
+  box-shadow: 0 5px 30px 0 rgba(5, 8, 27, 0.1);
+  border-radius: 5px;
+  padding: 40px 30px;
+
+  label {
+    color: #878cb1;
+    margin-bottom: 10px;
+  }
+
+  .#{$ns}TextControl {
+    &::before {
+      font-family: iconfont !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      content: '\e849';
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      color: #666666;
+    }
+  }
+
+  .#{$ns}TextControl-input {
+    background: #f6f7fb;
+    border: 0;
+    padding: 10px 0 10px 50px !important;
+    height: 40px;
+
+    > input {
+      line-height: 20px;
+      height: 20px;
+    }
+  }
+
+  .#{$ns}TextControl.is-error > .#{$ns}TextControl-input {
+    background: #f6f7fb;
+  }
+
+  .#{$ns}Email-control .#{$ns}TextControl-input {
+    position: relative;
+
+    &::before {
+      font-family: iconfont !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      content: '\e786';
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      color: #666666;
+    }
+  }
+
+  .#{$ns}Email-control .#{$ns}TextControl-button > button {
+    border: 0;
+    height: 40px;
+    background: #f6f7fb;
+    color: #666666;
+    padding: 0 5px;
+
+    &:hover,
+    &:focus {
+      background: darken($color: #f6f7fb, $amount: 5%);
+    }
+
+    &:disabled {
+      background: darken($color: #f6f7fb, $amount: 2.5%) !important;
+    }
+  }
+
+  button[type='submit'] {
+    margin-top: 40px;
+  }
+}
+
+.Login-container {
+  margin: 50px auto;
+  width: 540px;
+  background: #ffffff;
+  box-shadow: 0 5px 30px 0 rgba(5, 8, 27, 0.1);
+  border-radius: 5px;
+  padding: 40px 0;
+
+  &-content {
+    //min-height: 240px;
+    padding: 40px 30px;
+
+    &:empty {
+      display: none;
+    }
+
+    .#{$ns}Token-control .#{$ns}TextControl-button {
+      margin-left: 10px;
+
+      > button,
+      div {
+        width: 100px;
+        border: 0;
+        height: 40px;
+        border-radius: 3px !important;
+      }
+      > div {
+        line-height: 32px;
+      }
+    }
+
+    .#{$ns}Submit-control {
+      margin-top: 24px;
+      padding: 0;
+      > button[type='submit'] {
+        border-radius: 3px;
+        padding: 0;
+      }
+    }
+  }
+}
