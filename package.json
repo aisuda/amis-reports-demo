@@ -1,6 +1,6 @@
 {
   "name": "amis-reports-demo",
-  "version": "1.5.0",
+  "version": "1.5.5",
   "description": "爱速搭报表Demo，爱速搭报表基于 ECharts 实现的图表功能组件，旨在为用户提供简单和快捷的可视化报表能力，帮助用户在爱速搭平台上快速设计常见的数据报表页和大屏报表效果页。",
   "keywords": [
     "报表",
