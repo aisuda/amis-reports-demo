@@ -3,7 +3,6 @@
  */
 import * as React from 'react';
 import { RendererProps } from 'amis-core';
-import './locale/index';
 import 'amis-ui/lib/themes/default.css';
 import 'amis-ui/lib/themes/cxd.css';
 import './scss/login.scss';

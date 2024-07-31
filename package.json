@@ -12,9 +12,7 @@
   "scripts": {
     "dev": "amis dev",
     "build": "amis build",
-    "i18n:update": "npx i18n update --config=./i18nConfig.js --secretKey=amis-reports",
-    "i18n:translate": "npx i18n translate --config=./i18nConfig.js --l=en-US",
-    "format": "prettier --write \"editor/**/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,vue,scss,json}\""
   },
   "husky": {
     "hooks": {
@@ -39,29 +37,26 @@
     "react-dom": "^16.8.6",
     "amis": "^6.6.0",
     "amis-core": "^6.6.0",
-    "amis-reports": "^1.5.0",
-    "i18n-runtime": "^0.0.23-beta.7"
+    "amis-reports": "^1.5.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^9.1.1",
     "@types/qs": "^6.9.15",
-    "@types/react": "^16",
+    "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/uuid": "^8.3.1",
     "amis-editor": "^6.6.0",
     "amis-editor-core": "^6.6.0",
     "amis-widget-cli": "^3.1.10",
     "husky": "^4.2.5",
-    "i18n-command": "^0.0.23-beta.17",
     "lint-staged": "^10.2.9",
     "monaco-editor-webpack-plugin": "6.0.0",
     "prettier": "^2.0.5",
     "webpack-react-i18n": "^1.0.7"
   },
   "engines": {
-    "node": ">= 10.13.0",
-    "npm": ">= 6.4.1",
+    "node": ">=18",
     "amis-core": ">= 5.2.5",
     "amis-editor-core": ">= 5.2.5"
   },

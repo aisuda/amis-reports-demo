@@ -1,7 +1,6 @@
 'use strict';
 const path = require('path');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const i18nConfig = require('./i18nConfig');
 // 统一路径解析
 function resolve(dir) {
   return path.resolve(__dirname, dir);
@@ -20,37 +19,31 @@ module.exports = {
       // webpack的resolve配置
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue', '.esm.js', '.umd.js', '.min.js', '.json', '.mjs'],
       alias: {
-        '@': resolve('demo'),
-        $utils: resolve('demo/common/utils'),
+        '@': resolve('src'),
+        $utils: resolve('src/common/utils'),
       },
       // conditionNames: ['require']
     },
     createDeclaration: true, // 打包时是否创建ts声明文件
     ignoreNodeModules: false, // 打包时是否忽略 node_modules
     allowList: [], // ignoreNodeModules为true时生效
-    externals: [],
-    projectDir: ['demo'],
-    template: resolve('./demo/index.html'), // 使用自己的html模板
+    externals: ['react-pdf'],
+    projectDir: ['src'],
+    template: resolve('./src/index.html'), // 使用自己的html模板
     // cssLoaderUrl: true,
     // cssLoaderUrlDir: 'editor/fontawesome-free',
     // moduleRules: [], // 用于配置自定义loaders
-    moduleRules: [
-      {
-        test: /.*(ts|tsx|js|jsx)$/,
-        loader: 'webpack-react-i18n',
-        options: i18nConfig
-      }
-    ],
+    moduleRules: [],
     plugins: [], // 用于配置自定义plugins
   },
   dev: {
     entry: { // 本地调试模式的入口
       index: [
-        './demo/Editor.jsx'
+        './src/Editor.jsx'
       ],
-      saas: './demo/SaasEditor.jsx',
-      modelEditor: './demo/ModelDataEditor.jsx',
-      login: './demo/Login.tsx'
+      saas: './src/SaasEditor.jsx',
+      modelEditor: './src/ModelDataEditor.jsx',
+      login: './src/Login.tsx'
     },
     // 用于开启本地调试模式的相关配置信息
     NODE_ENV: 'development',
@@ -99,7 +92,7 @@ module.exports = {
   build: {
     entry: { // 构建Demo入口
       index: [
-        './demo/Editor.jsx'
+        './src/Editor.jsx'
       ]
     },
     // 用于构建生产环境代码的相关配置信息

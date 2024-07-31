@@ -2,7 +2,7 @@
  * amis-reports-demo v1.5.0
  * author: wibetter
  * build tool: AKFun
- * build time: Tue Jul 30 2024 22:00:34 GMT+0800 (中国标准时间)
+ * build time: Wed Jul 31 2024 20:33:13 GMT+0800 (China Standard Time)
  * build tool info: https://github.com/wibetter/akfun
  */
 

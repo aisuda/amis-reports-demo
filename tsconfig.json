@@ -6,7 +6,7 @@
     /* 指定编译之后的版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
     "module": "esnext" /* 指定要使用的模板标准: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
     // "lib": [],                             /* Specify library files to be included in the compilation. */
-    "allowJs": false /* 指定是否允许编译JS文件，默认false,即不编译JS文件. */,
+    "allowJs": true /* 指定是否允许编译JS文件，默认false,即不编译JS文件. */,
     // "checkJs": true,                       /* 指定是否检查和报告JS文件中的错误，默认false */
     "jsx": "react" /* 指定jsx代码用于的开发环境:'preserve','react-native', or 'react'. */,
     "declaration": false /* 指定是否在编译的时候生成相的d.ts声明文件 */,
@@ -39,9 +39,10 @@
 
     /* Module Resolution Options */
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
-    "baseUrl": "./" /* Base directory to resolve non-absolute module names. */,
+    "rootDir": "./src",
+    "baseUrl": "./src" /* Base directory to resolve non-absolute module names. */,
     "paths": {
-      "@": ["./demo"],
+      "@": ["./src"],
     },                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     /* 指定声明文件或文件夹的路径列表，如果指定了此项，则只有在这里列出的声明文件才会被加载 */
@@ -66,6 +67,6 @@
     "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
     // "suppressImplicitAnyIndexErrors": true /* Suppress --noImplicitAny errors for indexing objects lacking index signatures. See issue #1232 for more details. */
   },
-  "include": ["demo"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
