@@ -33,6 +33,60 @@ const schema = {
       staticJson: chartArrayData,
       dimensions: chartDefaultDimensions,
       measures: chartDefaultMeasures
+    },
+    {
+      type: 'chart-pie',
+      tooltipContent: 'b,c,d',
+      labelContent: 'b,c,d',
+      pieChartType: 'default',
+      dataSourceType: 'staticJson',
+      dataType: 2,
+      staticJson: {
+        'chartLegend': '订单转化率',
+        'pv': 98609,
+        'uv': 36553,
+        'orders': 21162,
+        'conversionRate': 0.1126,
+        'growthRate': 36,
+        '80后': 12332,
+        '90后': 23221,
+        '00后': 25021,
+        'date': '20230731'
+      },
+      dimensions: [],
+      measures: [
+        {
+          modelFieldType: 'number',
+          formatter: '',
+          as: '80后'
+        },
+        {
+          modelFieldType: 'number',
+          formatter: '',
+          as: '90后'
+        },
+        {
+          modelFieldType: 'number',
+          formatter: '',
+          as: '00后'
+        }
+      ],
+      id: 'u:6c58b0eb73c5',
+      colorTheme: 'default',
+      gradientStatus: false,
+      titleShow: true,
+      legendShow: true,
+      labelShow: true,
+      tooltipShow: true,
+      titleAlignment: 'left',
+      legendAlign: 'auto',
+      legendOrient: 'horizontal',
+      legendType: 'plain',
+      legendPosition: 'top',
+      legendDataShow: false,
+      labelPosition: 'outside',
+      labelOverflow: 'truncate',
+      color: []
     }
   ],
   regions: ['body']
