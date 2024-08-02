@@ -43,3 +43,6 @@ updateReportConfig({
 
 【备注3】  
 数据模型SDK当前仅支持「实体数据源」，暂时不支持「数据集」数据源。
+
+【备注4】
+如需在本地启动JSONQL服务，可点击查看启动方法[JSONQL jar包启动说明](./jar/README.md)。
