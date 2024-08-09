@@ -97,8 +97,8 @@ module.exports = {
     },
     // 用于构建生产环境代码的相关配置信息
     NODE_ENV: 'development', // development production
-    assetsRoot: resolve('./test'), // 打包后的文件绝对路径（物理路径）
-    assetsPublicPath: 'https://aisuda.github.io/amis-reports-demo/test/', // 设置静态资源的引用路径（根域名+路径）
+    assetsRoot: resolve('./demo/1.5.7'), // 打包后的文件绝对路径（物理路径）
+    assetsPublicPath: 'https://aisuda.github.io/amis-reports-demo/demo/1.5.7/', // 设置静态资源的引用路径（根域名+路径）
     assetsSubDirectory: '', // 资源引用二级路径
     productionSourceMap: false,
     productionGzip: false,

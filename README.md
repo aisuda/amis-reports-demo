@@ -1,5 +1,9 @@
 ### Demo示例
-[点击在线预览](https://aisuda.github.io/amis-reports-demo/test/index.html)
+[点击在线预览](https://aisuda.github.io/amis-reports-demo/demo/1.5.8/index.html)
+
+## 历史版本预览地址
+1. [1.5.8(2024.08.09)](https://aisuda.github.io/amis-reports-demo/demo/1.5.8/index.html)
+2. [1.5.7(2024.08.02)](https://aisuda.github.io/amis-reports-demo/demo/1.5.7/index.html)
 
 ### 本地调试
 

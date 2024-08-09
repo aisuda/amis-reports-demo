@@ -37,7 +37,7 @@
     "react-dom": "^16.8.6",
     "amis": "^6.6.0",
     "amis-core": "^6.6.0",
-    "amis-reports": "^1.5.3"
+    "amis-reports": "^1.5.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

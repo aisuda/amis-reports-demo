@@ -1,0 +1,3658 @@
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/*! ../../../core/echarts.js */
+
+/*! ../../../model/internalComponentCreator.js */
+
+/*! ../../../util/log.js */
+
+/*! ../../../util/model.js */
+
+/*! ../../action/roamHelper.js */
+
+/*! ../../animation/basicTransition.js */
+
+/*! ../../animation/customGraphicKeyframeAnimation.js */
+
+/*! ../../animation/customGraphicTransition.js */
+
+/*! ../../chart/helper/LineDraw.js */
+
+/*! ../../chart/helper/SymbolDraw.js */
+
+/*! ../../chart/helper/createSeriesData.js */
+
+/*! ../../component/dataZoom/installDataZoomSelect.js */
+
+/*! ../../component/geo/install.js */
+
+/*! ../../component/grid/installSimple.js */
+
+/*! ../../component/helper/MapDraw.js */
+
+/*! ../../component/helper/RoamController.js */
+
+/*! ../../component/helper/cursorHelper.js */
+
+/*! ../../component/helper/roamHelper.js */
+
+/*! ../../component/helper/sliderMove.js */
+
+/*! ../../component/parallel/install.js */
+
+/*! ../../component/radar/install.js */
+
+/*! ../../component/tooltip/seriesFormatTooltip.js */
+
+/*! ../../component/tooltip/tooltipMarkup.js */
+
+/*! ../../contain/text.js */
+
+/*! ../../coord/Axis.js */
+
+/*! ../../coord/CoordinateSystem.js */
+
+/*! ../../coord/View.js */
+
+/*! ../../coord/axisHelper.js */
+
+/*! ../../coord/axisModelCommonMixin.js */
+
+/*! ../../coord/axisModelCreator.js */
+
+/*! ../../coord/calendar/Calendar.js */
+
+/*! ../../coord/calendar/CalendarModel.js */
+
+/*! ../../coord/calendar/prepareCustom.js */
+
+/*! ../../coord/cartesian/AxisModel.js */
+
+/*! ../../coord/cartesian/Grid.js */
+
+/*! ../../coord/cartesian/GridModel.js */
+
+/*! ../../coord/cartesian/cartesianAxisHelper.js */
+
+/*! ../../coord/cartesian/prepareCustom.js */
+
+/*! ../../coord/geo/GeoModel.js */
+
+/*! ../../coord/geo/geoCreator.js */
+
+/*! ../../coord/geo/geoSourceManager.js */
+
+/*! ../../coord/geo/prepareCustom.js */
+
+/*! ../../coord/parallel/AxisModel.js */
+
+/*! ../../coord/parallel/ParallelModel.js */
+
+/*! ../../coord/parallel/parallelCreator.js */
+
+/*! ../../coord/parallel/parallelPreprocessor.js */
+
+/*! ../../coord/polar/AxisModel.js */
+
+/*! ../../coord/polar/PolarModel.js */
+
+/*! ../../coord/polar/polarCreator.js */
+
+/*! ../../coord/polar/prepareCustom.js */
+
+/*! ../../coord/radar/Radar.js */
+
+/*! ../../coord/radar/RadarModel.js */
+
+/*! ../../coord/scaleRawExtentInfo.js */
+
+/*! ../../coord/single/AxisModel.js */
+
+/*! ../../coord/single/prepareCustom.js */
+
+/*! ../../coord/single/singleAxisHelper.js */
+
+/*! ../../coord/single/singleCreator.js */
+
+/*! ../../core/CoordinateSystem.js */
+
+/*! ../../core/LRU.js */
+
+/*! ../../core/curve.js */
+
+/*! ../../core/echarts.js */
+
+/*! ../../core/locale.js */
+
+/*! ../../core/platform.js */
+
+/*! ../../core/util.js */
+
+/*! ../../core/vector.js */
+
+/*! ../../data/DataDiffer.js */
+
+/*! ../../data/Graph.js */
+
+/*! ../../data/SeriesData.js */
+
+/*! ../../data/Source.js */
+
+/*! ../../data/Tree.js */
+
+/*! ../../data/helper/createDimensions.js */
+
+/*! ../../data/helper/dataProvider.js */
+
+/*! ../../data/helper/dataStackHelper.js */
+
+/*! ../../data/helper/dataValueHelper.js */
+
+/*! ../../data/helper/dimensionHelper.js */
+
+/*! ../../data/helper/linkSeriesData.js */
+
+/*! ../../data/helper/sourceHelper.js */
+
+/*! ../../data/helper/sourceManager.js */
+
+/*! ../../dataZoom/history.js */
+
+/*! ../../extension.js */
+
+/*! ../../helper/BrushController.js */
+
+/*! ../../helper/BrushTargetManager.js */
+
+/*! ../../helper/sliderMove.js */
+
+/*! ../../label/labelGuideHelper.js */
+
+/*! ../../label/labelLayoutHelper.js */
+
+/*! ../../label/labelStyle.js */
+
+/*! ../../label/sectorLabel.js */
+
+/*! ../../layout/barGrid.js */
+
+/*! ../../layout/barPolar.js */
+
+/*! ../../layout/points.js */
+
+/*! ../../legacy/dataSelectAction.js */
+
+/*! ../../model/Component.js */
+
+/*! ../../model/Model.js */
+
+/*! ../../model/Series.js */
+
+/*! ../../model/mixin/dataFormat.js */
+
+/*! ../../model/mixin/makeStyleMapper.js */
+
+/*! ../../model/mixin/palette.js */
+
+/*! ../../model/referHelper.js */
+
+/*! ../../processor/dataFilter.js */
+
+/*! ../../processor/dataSample.js */
+
+/*! ../../processor/negativeDataFilter.js */
+
+/*! ../../scale/Interval.js */
+
+/*! ../../scale/Ordinal.js */
+
+/*! ../../scale/Time.js */
+
+/*! ../../scale/helper.js */
+
+/*! ../../util/animation.js */
+
+/*! ../../util/component.js */
+
+/*! ../../util/conditionalExpression.js */
+
+/*! ../../util/decal.js */
+
+/*! ../../util/event.js */
+
+/*! ../../util/format.js */
+
+/*! ../../util/graphic.js */
+
+/*! ../../util/innerStore.js */
+
+/*! ../../util/layout.js */
+
+/*! ../../util/log.js */
+
+/*! ../../util/model.js */
+
+/*! ../../util/number.js */
+
+/*! ../../util/shape/sausage.js */
+
+/*! ../../util/states.js */
+
+/*! ../../util/styleCompat.js */
+
+/*! ../../util/symbol.js */
+
+/*! ../../util/throttle.js */
+
+/*! ../../util/time.js */
+
+/*! ../../util/types.js */
+
+/*! ../../util/vendor.js */
+
+/*! ../../view/Chart.js */
+
+/*! ../../view/Component.js */
+
+/*! ../../visual/LegendVisualProvider.js */
+
+/*! ../../visual/VisualMapping.js */
+
+/*! ../../visual/aria.js */
+
+/*! ../../visual/helper.js */
+
+/*! ../../visual/visualDefault.js */
+
+/*! ../../visual/visualSolution.js */
+
+/*! ../Axis.js */
+
+/*! ../DataStore.js */
+
+/*! ../Element.js */
+
+/*! ../Path.js */
+
+/*! ../Region.js */
+
+/*! ../SeriesDimensionDefine.js */
+
+/*! ../Source.js */
+
+/*! ../View.js */
+
+/*! ../animation/basicTransition.js */
+
+/*! ../animation/cubicEasing.js */
+
+/*! ../animation/requestAnimationFrame.js */
+
+/*! ../axis/AngleAxisView.js */
+
+/*! ../axis/AxisBuilder.js */
+
+/*! ../axis/AxisView.js */
+
+/*! ../axis/CartesianAxisView.js */
+
+/*! ../axis/ParallelAxisView.js */
+
+/*! ../axis/RadiusAxisView.js */
+
+/*! ../axis/SingleAxisView.js */
+
+/*! ../axis/parallelAxisAction.js */
+
+/*! ../axisAlignTicks.js */
+
+/*! ../axisDefault.js */
+
+/*! ../axisHelper.js */
+
+/*! ../axisModelCommonMixin.js */
+
+/*! ../axisPointer/PolarAxisPointer.js */
+
+/*! ../axisPointer/SingleAxisPointer.js */
+
+/*! ../axisPointer/findPointFromSeries.js */
+
+/*! ../axisPointer/globalListener.js */
+
+/*! ../axisPointer/install.js */
+
+/*! ../axisPointer/modelHelper.js */
+
+/*! ../axisPointer/viewHelper.js */
+
+/*! ../canvas/dashStyle.js */
+
+/*! ../canvas/helper.js */
+
+/*! ../chart/helper/createRenderPlanner.js */
+
+/*! ../component/tooltip/seriesFormatTooltip.js */
+
+/*! ../config.js */
+
+/*! ../contain/path.js */
+
+/*! ../contain/text.js */
+
+/*! ../coord/Axis.js */
+
+/*! ../coord/geo/parseGeoJson.js */
+
+/*! ../core/BoundingRect.js */
+
+/*! ../core/Eventful.js */
+
+/*! ../core/LRU.js */
+
+/*! ../core/PathProxy.js */
+
+/*! ../core/Point.js */
+
+/*! ../core/Transformable.js */
+
+/*! ../core/bbox.js */
+
+/*! ../core/curve.js */
+
+/*! ../core/dom.js */
+
+/*! ../core/echarts.js */
+
+/*! ../core/env.js */
+
+/*! ../core/event.js */
+
+/*! ../core/locale.js */
+
+/*! ../core/matrix.js */
+
+/*! ../core/platform.js */
+
+/*! ../core/task.js */
+
+/*! ../core/util.js */
+
+/*! ../core/vector.js */
+
+/*! ../data/DataDiffer.js */
+
+/*! ../data/OrdinalMeta.js */
+
+/*! ../data/SeriesData.js */
+
+/*! ../data/helper/dataStackHelper.js */
+
+/*! ../data/helper/dataValueHelper.js */
+
+/*! ../data/helper/sourceHelper.js */
+
+/*! ../data/helper/sourceManager.js */
+
+/*! ../data/helper/transform.js */
+
+/*! ../extension.js */
+
+/*! ../featureManager.js */
+
+/*! ../graphic.js */
+
+/*! ../graphic/CompoundPath.js */
+
+/*! ../graphic/Displayable.js */
+
+/*! ../graphic/Group.js */
+
+/*! ../graphic/Image.js */
+
+/*! ../graphic/LinearGradient.js */
+
+/*! ../graphic/Path.js */
+
+/*! ../graphic/RadialGradient.js */
+
+/*! ../graphic/TSpan.js */
+
+/*! ../graphic/Text.js */
+
+/*! ../graphic/constants.js */
+
+/*! ../graphic/helper/image.js */
+
+/*! ../graphic/shape/Circle.js */
+
+/*! ../graphic/shape/Ellipse.js */
+
+/*! ../graphic/shape/Line.js */
+
+/*! ../graphic/shape/Polygon.js */
+
+/*! ../graphic/shape/Polyline.js */
+
+/*! ../graphic/shape/Rect.js */
+
+/*! ../graphic/shape/Sector.js */
+
+/*! ../helper/BrushController.js */
+
+/*! ../helper/BrushTargetManager.js */
+
+/*! ../helper/EffectLine.js */
+
+/*! ../helper/EffectPolyline.js */
+
+/*! ../helper/EffectSymbol.js */
+
+/*! ../helper/LargeLineDraw.js */
+
+/*! ../helper/LargeSymbolDraw.js */
+
+/*! ../helper/Line.js */
+
+/*! ../helper/LineDraw.js */
+
+/*! ../helper/MapDraw.js */
+
+/*! ../helper/Polyline.js */
+
+/*! ../helper/Symbol.js */
+
+/*! ../helper/SymbolDraw.js */
+
+/*! ../helper/brushHelper.js */
+
+/*! ../helper/createClipPathFromCoordSys.js */
+
+/*! ../helper/createGraphFromNodeEdge.js */
+
+/*! ../helper/createRenderPlanner.js */
+
+/*! ../helper/createSeriesData.js */
+
+/*! ../helper/createSeriesDataSimply.js */
+
+/*! ../helper/enableAriaDecalForTree.js */
+
+/*! ../helper/image.js */
+
+/*! ../helper/labelHelper.js */
+
+/*! ../helper/listComponent.js */
+
+/*! ../helper/multipleGraphEdgeHelper.js */
+
+/*! ../helper/pieHelper.js */
+
+/*! ../helper/poly.js */
+
+/*! ../helper/roundRect.js */
+
+/*! ../helper/roundSector.js */
+
+/*! ../helper/sliderMove.js */
+
+/*! ../helper/subPixelOptimize.js */
+
+/*! ../helper/treeHelper.js */
+
+/*! ../helper/whiskerBoxCommon.js */
+
+/*! ../i18n/langEN.js */
+
+/*! ../i18n/langZH.js */
+
+/*! ../label/installLabelLayout.js */
+
+/*! ../layout/barGrid.js */
+
+/*! ../legacy/dataSelectAction.js */
+
+/*! ../legacy/getTextRect.js */
+
+/*! ../line/poly.js */
+
+/*! ../loading/default.js */
+
+/*! ../model/Component.js */
+
+/*! ../model/Global.js */
+
+/*! ../model/Model.js */
+
+/*! ../model/OptionManager.js */
+
+/*! ../model/Series.js */
+
+/*! ../model/mixin/dataFormat.js */
+
+/*! ../model/mixin/itemStyle.js */
+
+/*! ../model/mixin/lineStyle.js */
+
+/*! ../model/mixin/makeStyleMapper.js */
+
+/*! ../model/mixin/palette.js */
+
+/*! ../pie/pieLayout.js */
+
+/*! ../preprocessor/backwardCompat.js */
+
+/*! ../processor/dataStack.js */
+
+/*! ../radar/backwardCompat.js */
+
+/*! ../radar/radarLayout.js */
+
+/*! ../scale/Interval.js */
+
+/*! ../scale/Log.js */
+
+/*! ../scale/Ordinal.js */
+
+/*! ../scale/Scale.js */
+
+/*! ../scale/Time.js */
+
+/*! ../scale/helper.js */
+
+/*! ../svg/helper.js */
+
+/*! ../theme/dark.js */
+
+/*! ../theme/light.js */
+
+/*! ../tool/color.js */
+
+/*! ../toolbox/feature/Brush.js */
+
+/*! ../toolbox/featureManager.js */
+
+/*! ../tooltip/tooltipMarkup.js */
+
+/*! ../util/ECEventProcessor.js */
+
+/*! ../util/clazz.js */
+
+/*! ../util/component.js */
+
+/*! ../util/decal.js */
+
+/*! ../util/event.js */
+
+/*! ../util/format.js */
+
+/*! ../util/graphic.js */
+
+/*! ../util/innerStore.js */
+
+/*! ../util/layout.js */
+
+/*! ../util/log.js */
+
+/*! ../util/model.js */
+
+/*! ../util/number.js */
+
+/*! ../util/states.js */
+
+/*! ../util/throttle.js */
+
+/*! ../util/time.js */
+
+/*! ../util/types.js */
+
+/*! ../util/vendor.js */
+
+/*! ../view/Chart.js */
+
+/*! ../view/Component.js */
+
+/*! ../visual/decal.js */
+
+/*! ../visual/helper.js */
+
+/*! ../visual/style.js */
+
+/*! ../visual/symbol.js */
+
+/*! ./AngleAxis.js */
+
+/*! ./Animator.js */
+
+/*! ./Axis2D.js */
+
+/*! ./AxisBuilder.js */
+
+/*! ./AxisPointerModel.js */
+
+/*! ./AxisPointerView.js */
+
+/*! ./AxisProxy.js */
+
+/*! ./AxisView.js */
+
+/*! ./BarSeries.js */
+
+/*! ./BarView.js */
+
+/*! ./BaseAxisPointer.js */
+
+/*! ./BaseBarSeries.js */
+
+/*! ./BoundingRect.js */
+
+/*! ./BoxplotSeries.js */
+
+/*! ./BoxplotView.js */
+
+/*! ./Breadcrumb.js */
+
+/*! ./BrushModel.js */
+
+/*! ./BrushView.js */
+
+/*! ./CalendarView.js */
+
+/*! ./CandlestickSeries.js */
+
+/*! ./CandlestickView.js */
+
+/*! ./Cartesian.js */
+
+/*! ./Cartesian2D.js */
+
+/*! ./CartesianAxisPointer.js */
+
+/*! ./Clip.js */
+
+/*! ./Component.js */
+
+/*! ./ContinuousModel.js */
+
+/*! ./ContinuousView.js */
+
+/*! ./CoordinateSystem.js */
+
+/*! ./CustomSeries.js */
+
+/*! ./CustomView.js */
+
+/*! ./DataDiffer.js */
+
+/*! ./DataStore.js */
+
+/*! ./DataZoomModel.js */
+
+/*! ./DataZoomView.js */
+
+/*! ./Displayable.js */
+
+/*! ./EffectLine.js */
+
+/*! ./EffectScatterSeries.js */
+
+/*! ./EffectScatterView.js */
+
+/*! ./Eventful.js */
+
+/*! ./ExtensionAPI.js */
+
+/*! ./FunnelSeries.js */
+
+/*! ./FunnelView.js */
+
+/*! ./GaugeSeries.js */
+
+/*! ./GaugeView.js */
+
+/*! ./Geo.js */
+
+/*! ./GeoJSONResource.js */
+
+/*! ./GeoSVGResource.js */
+
+/*! ./GeoView.js */
+
+/*! ./Gradient.js */
+
+/*! ./GraphSeries.js */
+
+/*! ./GraphView.js */
+
+/*! ./GraphicModel.js */
+
+/*! ./GraphicView.js */
+
+/*! ./Handler.js */
+
+/*! ./HeatmapLayer.js */
+
+/*! ./HeatmapSeries.js */
+
+/*! ./HeatmapView.js */
+
+/*! ./Image.js */
+
+/*! ./IndicatorAxis.js */
+
+/*! ./InsideZoomModel.js */
+
+/*! ./InsideZoomView.js */
+
+/*! ./Interval.js */
+
+/*! ./LabelManager.js */
+
+/*! ./Layer.js */
+
+/*! ./LegendModel.js */
+
+/*! ./LegendView.js */
+
+/*! ./Line.js */
+
+/*! ./LinePath.js */
+
+/*! ./LineSeries.js */
+
+/*! ./LineView.js */
+
+/*! ./LinesSeries.js */
+
+/*! ./LinesView.js */
+
+/*! ./MapSeries.js */
+
+/*! ./MapView.js */
+
+/*! ./MarkAreaModel.js */
+
+/*! ./MarkAreaView.js */
+
+/*! ./MarkLineModel.js */
+
+/*! ./MarkLineView.js */
+
+/*! ./MarkPointModel.js */
+
+/*! ./MarkPointView.js */
+
+/*! ./MarkerModel.js */
+
+/*! ./MarkerView.js */
+
+/*! ./Model.js */
+
+/*! ./Parallel.js */
+
+/*! ./ParallelAxis.js */
+
+/*! ./ParallelSeries.js */
+
+/*! ./ParallelView.js */
+
+/*! ./Path.js */
+
+/*! ./PictorialBarSeries.js */
+
+/*! ./PictorialBarView.js */
+
+/*! ./PieSeries.js */
+
+/*! ./PieView.js */
+
+/*! ./PiecewiseModel.js */
+
+/*! ./PiecewiseView.js */
+
+/*! ./Point.js */
+
+/*! ./PointerPath.js */
+
+/*! ./Polar.js */
+
+/*! ./Polyline.js */
+
+/*! ./RadarSeries.js */
+
+/*! ./RadarView.js */
+
+/*! ./RadiusAxis.js */
+
+/*! ./Region.js */
+
+/*! ./RoamController.js */
+
+/*! ./SVGPathRebuilder.js */
+
+/*! ./SankeySeries.js */
+
+/*! ./SankeyView.js */
+
+/*! ./Scale.js */
+
+/*! ./ScatterSeries.js */
+
+/*! ./ScatterView.js */
+
+/*! ./Scheduler.js */
+
+/*! ./ScrollableLegendModel.js */
+
+/*! ./ScrollableLegendView.js */
+
+/*! ./SelectZoomModel.js */
+
+/*! ./SelectZoomView.js */
+
+/*! ./SeriesData.js */
+
+/*! ./SeriesDataSchema.js */
+
+/*! ./SeriesDimensionDefine.js */
+
+/*! ./Single.js */
+
+/*! ./SingleAxis.js */
+
+/*! ./SliderTimelineModel.js */
+
+/*! ./SliderTimelineView.js */
+
+/*! ./SliderZoomModel.js */
+
+/*! ./SliderZoomView.js */
+
+/*! ./Source.js */
+
+/*! ./Storage.js */
+
+/*! ./SunburstPiece.js */
+
+/*! ./SunburstSeries.js */
+
+/*! ./SunburstView.js */
+
+/*! ./Symbol.js */
+
+/*! ./TSpan.js */
+
+/*! ./ThemeRiverSeries.js */
+
+/*! ./ThemeRiverView.js */
+
+/*! ./TimelineAxis.js */
+
+/*! ./TimelineModel.js */
+
+/*! ./TimelineView.js */
+
+/*! ./ToolboxModel.js */
+
+/*! ./ToolboxView.js */
+
+/*! ./TooltipHTMLContent.js */
+
+/*! ./TooltipModel.js */
+
+/*! ./TooltipRichContent.js */
+
+/*! ./TooltipView.js */
+
+/*! ./TreeSeries.js */
+
+/*! ./TreeView.js */
+
+/*! ./TreemapSeries.js */
+
+/*! ./TreemapView.js */
+
+/*! ./VisualMapModel.js */
+
+/*! ./VisualMapView.js */
+
+/*! ./VisualMapping.js */
+
+/*! ./adjustEdge.js */
+
+/*! ./animation/Animation.js */
+
+/*! ./animation/Animator.js */
+
+/*! ./api.js */
+
+/*! ./api/format.js */
+
+/*! ./api/graphic.js */
+
+/*! ./api/helper.js */
+
+/*! ./api/number.js */
+
+/*! ./api/time.js */
+
+/*! ./api/util.js */
+
+/*! ./arc.js */
+
+/*! ./axisCommonTypes.js */
+
+/*! ./axisDefault.js */
+
+/*! ./axisHelper.js */
+
+/*! ./axisSplitHelper.js */
+
+/*! ./axisTickLabelBuilder.js */
+
+/*! ./axisTrigger.js */
+
+/*! ./basicTransition.js */
+
+/*! ./bbox.js */
+
+/*! ./boxplotLayout.js */
+
+/*! ./boxplotTransform.js */
+
+/*! ./boxplotVisual.js */
+
+/*! ./brushHelper.js */
+
+/*! ./candlestickLayout.js */
+
+/*! ./candlestickVisual.js */
+
+/*! ./cartesianAxisHelper.js */
+
+/*! ./categoryFilter.js */
+
+/*! ./categoryVisual.js */
+
+/*! ./checkMarkerInSeries.js */
+
+/*! ./circularLayout.js */
+
+/*! ./circularLayoutHelper.js */
+
+/*! ./clazz.js */
+
+/*! ./config.js */
+
+/*! ./constants.js */
+
+/*! ./contain/text.js */
+
+/*! ./convertPath.js */
+
+/*! ./core.js */
+
+/*! ./core/BoundingRect.js */
+
+/*! ./core/Eventful.js */
+
+/*! ./core/GestureMgr.js */
+
+/*! ./core/Transformable.js */
+
+/*! ./core/echarts.js */
+
+/*! ./core/env.js */
+
+/*! ./core/event.js */
+
+/*! ./core/impl.js */
+
+/*! ./core/timsort.js */
+
+/*! ./core/util.js */
+
+/*! ./core/vector.js */
+
+/*! ./createSeriesData.js */
+
+/*! ./createSeriesDataSimply.js */
+
+/*! ./createView.js */
+
+/*! ./cssAnimation.js */
+
+/*! ./cubic.js */
+
+/*! ./cubicEasing.js */
+
+/*! ./cursorHelper.js */
+
+/*! ./curve.js */
+
+/*! ./customGraphicTransition.js */
+
+/*! ./dashStyle.js */
+
+/*! ./dataProvider.js */
+
+/*! ./dataValueHelper.js */
+
+/*! ./dataZoomAction.js */
+
+/*! ./dataZoomProcessor.js */
+
+/*! ./dividePath.js */
+
+/*! ./dom.js */
+
+/*! ./dom/HandlerProxy.js */
+
+/*! ./domapi.js */
+
+/*! ./easing.js */
+
+/*! ./edgeVisual.js */
+
+/*! ./env.js */
+
+/*! ./event.js */
+
+/*! ./feature/DataView.js */
+
+/*! ./feature/DataZoom.js */
+
+/*! ./feature/MagicType.js */
+
+/*! ./feature/Restore.js */
+
+/*! ./feature/SaveAsImage.js */
+
+/*! ./featureManager.js */
+
+/*! ./filterTransform.js */
+
+/*! ./findPointFromSeries.js */
+
+/*! ./fix/diaoyuIsland.js */
+
+/*! ./fix/nanhai.js */
+
+/*! ./fix/textCoord.js */
+
+/*! ./forceHelper.js */
+
+/*! ./forceLayout.js */
+
+/*! ./format.js */
+
+/*! ./fourPointsTransform.js */
+
+/*! ./funnelLayout.js */
+
+/*! ./geoCreator.js */
+
+/*! ./geoSourceManager.js */
+
+/*! ./globalDefault.js */
+
+/*! ./globalListener.js */
+
+/*! ./graphHelper.js */
+
+/*! ./graphic.js */
+
+/*! ./graphic/Group.js */
+
+/*! ./graphic/constants.js */
+
+/*! ./helper.js */
+
+/*! ./helper/SeriesDataSchema.js */
+
+/*! ./helper/compatStyle.js */
+
+/*! ./helper/createDimensions.js */
+
+/*! ./helper/dataProvider.js */
+
+/*! ./helper/dataValueHelper.js */
+
+/*! ./helper/dimensionHelper.js */
+
+/*! ./helper/linkSeriesData.js */
+
+/*! ./helper/parseText.js */
+
+/*! ./helper/sourceHelper.js */
+
+/*! ./impl.js */
+
+/*! ./innerStore.js */
+
+/*! ./installCommon.js */
+
+/*! ./installDataZoomInside.js */
+
+/*! ./installDataZoomSlider.js */
+
+/*! ./installLegendPlain.js */
+
+/*! ./installLegendScroll.js */
+
+/*! ./installSimple.js */
+
+/*! ./installVisualMapContinuous.js */
+
+/*! ./installVisualMapPiecewise.js */
+
+/*! ./interactionMutex.js */
+
+/*! ./internalComponentCreator.js */
+
+/*! ./labelGuideHelper.js */
+
+/*! ./labelHelper.js */
+
+/*! ./labelLayout.js */
+
+/*! ./labelLayoutHelper.js */
+
+/*! ./labelStyle.js */
+
+/*! ./layoutHelper.js */
+
+/*! ./legendAction.js */
+
+/*! ./legendFilter.js */
+
+/*! ./lib/export/charts.js */
+
+/*! ./lib/export/components.js */
+
+/*! ./lib/export/core.js */
+
+/*! ./lib/export/features.js */
+
+/*! ./lib/export/renderers.js */
+
+/*! ./lib/extension.js */
+
+/*! ./lifecycle.js */
+
+/*! ./line.js */
+
+/*! ./lineAnimationDiff.js */
+
+/*! ./linesLayout.js */
+
+/*! ./linesVisual.js */
+
+/*! ./locale.js */
+
+/*! ./log.js */
+
+/*! ./makeStyleMapper.js */
+
+/*! ./mapDataStatistic.js */
+
+/*! ./mapStyleToAttrs.js */
+
+/*! ./mapSymbolLayout.js */
+
+/*! ./markerHelper.js */
+
+/*! ./matrix.js */
+
+/*! ./mixin/Draggable.js */
+
+/*! ./mixin/areaStyle.js */
+
+/*! ./mixin/itemStyle.js */
+
+/*! ./mixin/lineStyle.js */
+
+/*! ./mixin/palette.js */
+
+/*! ./mixin/textStyle.js */
+
+/*! ./model.js */
+
+/*! ./model/Component.js */
+
+/*! ./model/Series.js */
+
+/*! ./modelHelper.js */
+
+/*! ./morphTransitionHelper.js */
+
+/*! ./number.js */
+
+/*! ./parallelVisual.js */
+
+/*! ./parseGeoJson.js */
+
+/*! ./parseXML.js */
+
+/*! ./patch.js */
+
+/*! ./path.js */
+
+/*! ./pieLayout.js */
+
+/*! ./platform.js */
+
+/*! ./poly.js */
+
+/*! ./prepareBoxplotData.js */
+
+/*! ./preprocessor.js */
+
+/*! ./quadratic.js */
+
+/*! ./requestAnimationFrame.js */
+
+/*! ./roams.js */
+
+/*! ./sankeyLayout.js */
+
+/*! ./sankeyVisual.js */
+
+/*! ./scaleRawExtentInfo.js */
+
+/*! ./scrollableLegendAction.js */
+
+/*! ./selector.js */
+
+/*! ./shape/Rect.js */
+
+/*! ./simpleLayout.js */
+
+/*! ./simpleLayoutHelper.js */
+
+/*! ./smoothBezier.js */
+
+/*! ./sortTransform.js */
+
+/*! ./sourceHelper.js */
+
+/*! ./sunburstAction.js */
+
+/*! ./sunburstLayout.js */
+
+/*! ./sunburstVisual.js */
+
+/*! ./symbol.js */
+
+/*! ./task.js */
+
+/*! ./themeRiverLayout.js */
+
+/*! ./time.js */
+
+/*! ./timelineAction.js */
+
+/*! ./tool/color.js */
+
+/*! ./tooltipMarkup.js */
+
+/*! ./transform.js */
+
+/*! ./transformPath.js */
+
+/*! ./traversalHelper.js */
+
+/*! ./treeAction.js */
+
+/*! ./treeLayout.js */
+
+/*! ./treeVisual.js */
+
+/*! ./treemapAction.js */
+
+/*! ./treemapLayout.js */
+
+/*! ./treemapVisual.js */
+
+/*! ./util.js */
+
+/*! ./vector.js */
+
+/*! ./view/Chart.js */
+
+/*! ./view/Component.js */
+
+/*! ./viewHelper.js */
+
+/*! ./visualEncoding.js */
+
+/*! ./visualMapAction.js */
+
+/*! ./windingLine.js */
+
+/*! tslib */
+
+/*! zrender/lib/animation/Animator.js */
+
+/*! zrender/lib/canvas/Painter.js */
+
+/*! zrender/lib/canvas/graphic.js */
+
+/*! zrender/lib/contain/line.js */
+
+/*! zrender/lib/contain/polygon.js */
+
+/*! zrender/lib/contain/quadratic.js */
+
+/*! zrender/lib/contain/text.js */
+
+/*! zrender/lib/contain/util.js */
+
+/*! zrender/lib/core/BoundingRect.js */
+
+/*! zrender/lib/core/Eventful.js */
+
+/*! zrender/lib/core/LRU.js */
+
+/*! zrender/lib/core/OrientedBoundingRect.js */
+
+/*! zrender/lib/core/PathProxy.js */
+
+/*! zrender/lib/core/Point.js */
+
+/*! zrender/lib/core/Transformable.js */
+
+/*! zrender/lib/core/WeakMap.js */
+
+/*! zrender/lib/core/bbox.js */
+
+/*! zrender/lib/core/curve.js */
+
+/*! zrender/lib/core/dom.js */
+
+/*! zrender/lib/core/env.js */
+
+/*! zrender/lib/core/event.js */
+
+/*! zrender/lib/core/matrix.js */
+
+/*! zrender/lib/core/platform.js */
+
+/*! zrender/lib/core/timsort.js */
+
+/*! zrender/lib/core/util.js */
+
+/*! zrender/lib/core/vector.js */
+
+/*! zrender/lib/graphic/CompoundPath.js */
+
+/*! zrender/lib/graphic/Displayable.js */
+
+/*! zrender/lib/graphic/Group.js */
+
+/*! zrender/lib/graphic/Image.js */
+
+/*! zrender/lib/graphic/IncrementalDisplayable.js */
+
+/*! zrender/lib/graphic/LinearGradient.js */
+
+/*! zrender/lib/graphic/Path.js */
+
+/*! zrender/lib/graphic/RadialGradient.js */
+
+/*! zrender/lib/graphic/Text.js */
+
+/*! zrender/lib/graphic/helper/parseText.js */
+
+/*! zrender/lib/graphic/helper/subPixelOptimize.js */
+
+/*! zrender/lib/graphic/shape/Arc.js */
+
+/*! zrender/lib/graphic/shape/BezierCurve.js */
+
+/*! zrender/lib/graphic/shape/Circle.js */
+
+/*! zrender/lib/graphic/shape/Ellipse.js */
+
+/*! zrender/lib/graphic/shape/Line.js */
+
+/*! zrender/lib/graphic/shape/Polygon.js */
+
+/*! zrender/lib/graphic/shape/Polyline.js */
+
+/*! zrender/lib/graphic/shape/Rect.js */
+
+/*! zrender/lib/graphic/shape/Ring.js */
+
+/*! zrender/lib/graphic/shape/Sector.js */
+
+/*! zrender/lib/svg/Painter.js */
+
+/*! zrender/lib/tool/color.js */
+
+/*! zrender/lib/tool/morphPath.js */
+
+/*! zrender/lib/tool/parseSVG.js */
+
+/*! zrender/lib/tool/parseXML.js */
+
+/*! zrender/lib/tool/path.js */
+
+/*! zrender/lib/zrender.js */
+
+/*!***************************************!*\
+  !*** ./node_modules/echarts/index.js ***!
+  \***************************************/
+
+/*!********************************************!*\
+  !*** ./node_modules/zrender/lib/config.js ***!
+  \********************************************/
+
+/*!*********************************************!*\
+  !*** ./node_modules/zrender/lib/Element.js ***!
+  \*********************************************/
+
+/*!*********************************************!*\
+  !*** ./node_modules/zrender/lib/Handler.js ***!
+  \*********************************************/
+
+/*!*********************************************!*\
+  !*** ./node_modules/zrender/lib/Storage.js ***!
+  \*********************************************/
+
+/*!*********************************************!*\
+  !*** ./node_modules/zrender/lib/zrender.js ***!
+  \*********************************************/
+
+/*!**********************************************!*\
+  !*** ./node_modules/echarts/lib/util/log.js ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./node_modules/zrender/lib/core/LRU.js ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./node_modules/zrender/lib/core/dom.js ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./node_modules/zrender/lib/core/env.js ***!
+  \**********************************************/
+
+/*!**********************************************!*\
+  !*** ./node_modules/zrender/lib/svg/core.js ***!
+  \**********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/echarts/lib/core/impl.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/echarts/lib/core/task.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/echarts/lib/data/Tree.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/echarts/lib/extension.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/echarts/lib/scale/Log.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/echarts/lib/util/time.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/zrender/lib/core/bbox.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/zrender/lib/core/util.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/zrender/lib/svg/patch.js ***!
+  \***********************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/zrender/lib/tool/path.js ***!
+  \***********************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/Axis.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/View.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/data/Graph.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/scale/Time.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/theme/dark.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/util/clazz.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/util/decal.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/util/event.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/util/model.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/util/types.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/echarts/lib/view/Chart.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/zrender/lib/core/Point.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/zrender/lib/core/curve.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/zrender/lib/core/event.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/domapi.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/helper.js ***!
+  \************************************************/
+
+/*!************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/color.js ***!
+  \************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/core/locale.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/data/Source.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/export/core.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/i18n/langEN.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/i18n/langZH.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/model/Model.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/scale/Scale.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/theme/light.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/util/format.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/util/layout.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/util/number.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/util/states.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/util/symbol.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/util/vendor.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/aria.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/arc.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/zrender/lib/core/matrix.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/zrender/lib/core/vector.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/Painter.js ***!
+  \*************************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/graphic.js ***!
+  \*************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/core/echarts.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/model/Global.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/model/Series.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/scale/helper.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/util/graphic.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/decal.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/style.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/canvas/Layer.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/line.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/path.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/text.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/util.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/core/WeakMap.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/core/timsort.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/Path.js ***!
+  \**************************************************/
+
+/*!**************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/Text.js ***!
+  \**************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/Geo.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/echarts/lib/layout/points.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/echarts/lib/scale/Ordinal.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/echarts/lib/util/throttle.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/helper.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/symbol.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/canvas/helper.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/cubic.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/core/Eventful.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/core/platform.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/Group.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/Image.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/TSpan.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/parseSVG.js ***!
+  \***************************************************/
+
+/*!***************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/parseXML.js ***!
+  \***************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/core/Scheduler.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/core/lifecycle.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/data/DataStore.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/layout/barGrid.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/scale/Interval.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/util/animation.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/util/component.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/echarts/lib/view/Component.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/zrender/lib/animation/Clip.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/zrender/lib/canvas/Painter.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/zrender/lib/canvas/graphic.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/zrender/lib/core/PathProxy.js ***!
+  \****************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/morphPath.js ***!
+  \****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/line/poly.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/data/DataDiffer.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/data/SeriesData.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api/time.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api/util.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/layout/barPolar.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/loading/default.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/model/Component.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/echarts/lib/util/innerStore.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/polygon.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/zrender/lib/core/GestureMgr.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/zrender/lib/mixin/Draggable.js ***!
+  \*****************************************************/
+
+/*!*****************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/dividePath.js ***!
+  \*****************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisHelper.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/Region.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/echarts/lib/data/OrdinalMeta.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/echarts/lib/label/labelStyle.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/echarts/lib/util/styleCompat.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/zrender/lib/animation/easing.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/zrender/lib/canvas/dashStyle.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/zrender/lib/dom/HandlerProxy.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/Gradient.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/cssAnimation.js ***!
+  \******************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/convertPath.js ***!
+  \******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/action/roamHelper.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/BarView.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/install.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/Line.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/line/helper.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/map/MapView.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/map/install.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/pie/PieView.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/pie/install.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisDefault.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/Polar.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/radar/Radar.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/core/ExtensionAPI.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api/format.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api/helper.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api/number.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/label/sectorLabel.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/echarts/lib/model/referHelper.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/quadratic.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/zrender/lib/core/BoundingRect.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/constants.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Arc.js ***!
+  \*******************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/line/install.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/install.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/GeoModel.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/export/api/graphic.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/label/LabelManager.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/legacy/getTextRect.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/echarts/lib/util/shape/sausage.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/zrender/lib/animation/Animator.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/zrender/lib/core/Transformable.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Line.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Rect.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Ring.js ***!
+  \********************************************************/
+
+/*!********************************************************!*\
+  !*** ./node_modules/zrender/lib/tool/transformPath.js ***!
+  \********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/BarSeries.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/gauge/install.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/install.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/Symbol.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/line/LineView.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/lines/install.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/map/MapSeries.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/pie/PieSeries.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/pie/pieLayout.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/radar/install.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/TreeView.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/single/Single.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/OptionManager.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/globalDefault.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/palette.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/echarts/lib/processor/dataStack.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/zrender/lib/animation/Animation.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/zrender/lib/contain/windingLine.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/Displayable.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/poly.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/mapStyleToAttrs.js ***!
+  \*********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/custom/install.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/funnel/install.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sankey/install.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisAlignTicks.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/Grid.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/fix/nanhai.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/geoCreator.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/processor/dataFilter.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/processor/dataSample.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/VisualMapping.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/visualDefault.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/CompoundPath.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/image.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Circle.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Sector.js ***!
+  \**********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./node_modules/zrender/lib/svg/SVGPathRebuilder.js ***!
+  \**********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/install.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/gauge/GaugeView.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/GraphView.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/heatmap/install.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/LineDraw.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/LinePath.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/Polyline.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/line/LineSeries.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/lines/LinesView.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/pie/labelLayout.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/radar/RadarView.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/scatter/install.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/TreeSeries.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/treeAction.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/treeLayout.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/treeVisual.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/install.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/component/geo/GeoView.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/component/geo/install.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisCommonTypes.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/AngleAxis.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/AxisModel.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/core/CoordinateSystem.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/transform.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/areaStyle.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/itemStyle.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/lineStyle.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/textStyle.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/util/ECEventProcessor.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/visualSolution.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/zrender/lib/animation/cubicEasing.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Ellipse.js ***!
+  \***********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Polygon.js ***!
+  \***********************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/adjustEdge.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/createView.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/edgeVisual.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/pieHelper.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/parallel/install.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/install.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/aria/install.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/grid/install.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/CoordinateSystem.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisModelCreator.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/Axis2D.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/parseGeoJson.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/PolarModel.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/RadiusAxis.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/radar/RadarModel.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/single/AxisModel.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/label/labelGuideHelper.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/dataFormat.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/LinearGradient.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/RadialGradient.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/Polyline.js ***!
+  \************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/BaseBarSeries.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/custom/CustomView.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/funnel/FunnelView.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/gauge/GaugeSeries.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/gauge/PointerPath.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/GraphSeries.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/forceHelper.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/forceLayout.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/graphHelper.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/EffectLine.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/SymbolDraw.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/treeHelper.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/lines/LinesSeries.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/lines/linesLayout.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/lines/linesVisual.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/radar/RadarSeries.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/radar/radarLayout.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sankey/SankeyView.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/layoutHelper.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/AxisView.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/brush/install.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/polar/install.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/radar/install.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/title/install.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/calendar/Calendar.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/fix/textCoord.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/prepareCustom.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/parallel/Parallel.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/single/SingleAxis.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/label/labelLayoutHelper.js ***!
+  \*************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./node_modules/echarts/lib/legacy/dataSelectAction.js ***!
+  \*************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/simpleLayout.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/labelHelper.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/themeRiver/install.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/Breadcrumb.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/brush/selector.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/roams.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/MapDraw.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/install.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/helper.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/GeoSVGResource.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/parallel/AxisModel.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/polarCreator.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/scaleRawExtentInfo.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/dataProvider.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/sourceHelper.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/lib/label/installLabelLayout.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/echarts/node_modules/tslib/tslib.es6.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/zrender/lib/core/fourPointsTransform.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/parseText.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/roundRect.js ***!
+  \**************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./node_modules/zrender/node_modules/tslib/tslib.es6.js ***!
+  \**************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/animation/basicTransition.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/BoxplotView.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/candlestick/install.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/custom/CustomSeries.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/funnel/FunnelSeries.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/funnel/funnelLayout.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/heatmap/HeatmapView.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/EffectSymbol.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/map/mapSymbolLayout.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sankey/SankeySeries.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sankey/sankeyLayout.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sankey/sankeyVisual.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/scatter/ScatterView.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/TreemapView.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/brush/BrushView.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/helper.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataset/install.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/graphic/install.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/radar/RadarView.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/install.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/install.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/AxisModel.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/Cartesian.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/GridModel.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/GeoJSONResource.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/polar/prepareCustom.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/radar/IndicatorAxis.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/sourceManager.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/zrender/lib/core/OrientedBoundingRect.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/shape/BezierCurve.js ***!
+  \***************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/PictorialBarView.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/categoryFilter.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/categoryVisual.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/circularLayout.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/heatmap/HeatmapLayer.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/LargeLineDraw.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/map/mapDataStatistic.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/radar/backwardCompat.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/tree/traversalHelper.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/AxisBuilder.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/brush/BrushModel.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/calendar/install.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/history.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/install.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/parallel/install.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/install.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/helper.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisModelCommonMixin.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/axisTickLabelBuilder.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/fix/diaoyuIsland.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/geo/geoSourceManager.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/single/prepareCustom.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/single/singleCreator.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/SeriesDimensionDefine.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/linkSeriesData.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/echarts/lib/util/conditionalExpression.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/roundSector.js ***!
+  \****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/BoxplotSeries.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/boxplotLayout.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/boxplotVisual.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/effectScatter/install.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/heatmap/HeatmapSeries.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/EffectPolyline.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/parallel/ParallelView.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/scatter/ScatterSeries.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/SunburstView.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/TreemapSeries.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/treemapAction.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/treemapLayout.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/treemap/treemapVisual.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/aria/preprocessor.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/roamHelper.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/sliderMove.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/LegendView.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkerView.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/transform/install.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/install.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/Cartesian2D.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/parallel/ParallelAxis.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/dataStackHelper.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/dataValueHelper.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/dimensionHelper.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/model/mixin/makeStyleMapper.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/preprocessor/backwardCompat.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/renderer/installSVGRenderer.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/echarts/lib/visual/LegendVisualProvider.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/smoothBezier.js ***!
+  \*****************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/PictorialBarSeries.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/LargeSymbolDraw.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/line/lineAnimationDiff.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/SunburstPiece.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/AngleAxisView.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/brush/preprocessor.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/AxisProxy.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/grid/installSimple.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/brushHelper.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/LegendModel.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkerModel.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/singleAxis/install.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/calendar/CalendarModel.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/calendar/prepareCustom.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/parallel/ParallelModel.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/SeriesDataSchema.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/data/helper/createDimensions.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/echarts/lib/processor/negativeDataFilter.js ***!
+  \******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/animation/universalTransition.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/bar/installPictorialBar.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/createSeriesData.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/whiskerBoxCommon.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/parallel/ParallelSeries.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/parallel/parallelVisual.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/SunburstSeries.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/sunburstAction.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/sunburstLayout.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/sunburst/sunburstVisual.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/RadiusAxisView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/SingleAxisView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/install.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/graphic/GraphicView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/cursorHelper.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/legendAction.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/legendFilter.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkAreaView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkLineView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/markerHelper.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/ToolboxView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/TooltipView.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/prepareCustom.js ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/single/singleAxisHelper.js ***!
+  \*******************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/boxplotTransform.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/candlestick/preprocessor.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/simpleLayoutHelper.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/axisSplitHelper.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/brush/visualEncoding.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/graphic/GraphicModel.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/listComponent.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkAreaModel.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkLineModel.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkPointView.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/ToolboxModel.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/TooltipModel.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/parallel/parallelCreator.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/model/internalComponentCreator.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/echarts/lib/renderer/installCanvasRenderer.js ***!
+  \********************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/IncrementalDisplayable.js ***!
+  \********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/animation/morphTransitionHelper.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/themeRiver/ThemeRiverView.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/ParallelAxisView.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/calendar/CalendarView.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/DataZoomView.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/RoamController.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/MarkPointModel.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/parallel/ParallelView.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/TimelineAxis.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/TimelineView.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/preprocessor.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/feature/Brush.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/tooltipMarkup.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/echarts/lib/preprocessor/helper/compatStyle.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/zrender/lib/animation/requestAnimationFrame.js ***!
+  \*********************************************************************/
+
+/*!*********************************************************************!*\
+  !*** ./node_modules/zrender/lib/graphic/helper/subPixelOptimize.js ***!
+  \*********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/boxplot/prepareBoxplotData.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/graph/circularLayoutHelper.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/createRenderPlanner.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/CartesianAxisView.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/viewHelper.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/DataZoomModel.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/installCommon.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/BrushController.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/installMarkArea.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/installMarkLine.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/TimelineModel.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/featureManager.js ***!
+  \**********************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/preprocessor.js ***!
+  \**********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/animation/customGraphicTransition.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/candlestick/CandlestickView.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/themeRiver/ThemeRiverSeries.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/themeRiver/themeRiverLayout.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axis/parallelAxisAction.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/axisTrigger.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/modelHelper.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/InsideZoomView.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/SelectZoomView.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/SliderZoomView.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/dataZoomAction.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/interactionMutex.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/installMarkPoint.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/timelineAction.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/feature/Restore.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/transform/sortTransform.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/PiecewiseView.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/VisualMapView.js ***!
+  \***********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/installCommon.js ***!
+  \***********************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/InsideZoomModel.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/SelectZoomModel.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/SliderZoomModel.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/feature/DataView.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/feature/DataZoom.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/ContinuousView.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/PiecewiseModel.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/VisualMapModel.js ***!
+  \************************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/visualEncoding.js ***!
+  \************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/candlestick/CandlestickSeries.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/candlestick/candlestickLayout.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/candlestick/candlestickVisual.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/createSeriesDataSimply.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/enableAriaDecalForTree.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/helper/BrushTargetManager.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/installLegendPlain.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/feature/MagicType.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/transform/filterTransform.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/ContinuousModel.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/visualMapAction.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/cartesian/cartesianAxisHelper.js ***!
+  \*************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./node_modules/echarts/lib/coord/parallel/parallelPreprocessor.js ***!
+  \*************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/createGraphFromNodeEdge.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/multipleGraphEdgeHelper.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/globalListener.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/dataZoomProcessor.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/installLegendScroll.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/marker/checkMarkerInSeries.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/TooltipHTMLContent.js ***!
+  \**************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/TooltipRichContent.js ***!
+  \**************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/effectScatter/EffectScatterView.js ***!
+  \***************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/AxisPointerView.js ***!
+  \***************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/BaseAxisPointer.js ***!
+  \***************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/ScrollableLegendView.js ***!
+  \***************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/SliderTimelineView.js ***!
+  \***************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/toolbox/feature/SaveAsImage.js ***!
+  \***************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/tooltip/seriesFormatTooltip.js ***!
+  \***************************************************************************/
+
+/*!****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/AxisPointerModel.js ***!
+  \****************************************************************************/
+
+/*!****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/PolarAxisPointer.js ***!
+  \****************************************************************************/
+
+/*!****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/ScrollableLegendModel.js ***!
+  \****************************************************************************/
+
+/*!****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/timeline/SliderTimelineModel.js ***!
+  \****************************************************************************/
+
+/*!*****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/effectScatter/EffectScatterSeries.js ***!
+  \*****************************************************************************/
+
+/*!*****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/chart/helper/createClipPathFromCoordSys.js ***!
+  \*****************************************************************************/
+
+/*!*****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/SingleAxisPointer.js ***!
+  \*****************************************************************************/
+
+/*!*****************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/legend/scrollableLegendAction.js ***!
+  \*****************************************************************************/
+
+/*!******************************************************************************!*\
+  !*** ./node_modules/echarts/lib/animation/customGraphicKeyframeAnimation.js ***!
+  \******************************************************************************/
+
+/*!******************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/installDataZoomInside.js ***!
+  \******************************************************************************/
+
+/*!******************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/installDataZoomSelect.js ***!
+  \******************************************************************************/
+
+/*!******************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/dataZoom/installDataZoomSlider.js ***!
+  \******************************************************************************/
+
+/*!*******************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/findPointFromSeries.js ***!
+  \*******************************************************************************/
+
+/*!********************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/axisPointer/CartesianAxisPointer.js ***!
+  \********************************************************************************/
+
+/*!***********************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/installVisualMapPiecewise.js ***!
+  \***********************************************************************************/
+
+/*!************************************************************************************!*\
+  !*** ./node_modules/echarts/lib/component/visualMap/installVisualMapContinuous.js ***!
+  \************************************************************************************/
